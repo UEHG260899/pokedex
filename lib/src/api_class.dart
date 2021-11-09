@@ -7,6 +7,7 @@ class PokemonInfo {
   String name;
   int id;
   int weight;
+  int height;
   List<TypeElement> types;
   static final String imgUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
@@ -14,6 +15,7 @@ class PokemonInfo {
     required this.name,
     required this.id,
     required this.weight,
+    required this.height,
     required this.types,
   });
 
@@ -22,6 +24,7 @@ class PokemonInfo {
       name: json['name'],
       id: json['id'],
       weight: json['weight'],
+      height: json['height'],
       types: List<TypeElement>.from(json["types"].map((x) => TypeElement.fromJson(x))),
     );
   }
