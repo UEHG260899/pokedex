@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class PokemonInfo {
   String name;
   int id;
-  int weight;
-  int height;
+  double weight;
+  double height;
   List<TypeElement> types;
   static final String imgUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
@@ -23,8 +23,8 @@ class PokemonInfo {
     return PokemonInfo(
       name: json['name'],
       id: json['id'],
-      weight: json['weight'],
-      height: json['height'],
+      weight: json['weight'] / 10,
+      height: json['height'] / 10,
       types: List<TypeElement>.from(json["types"].map((x) => TypeElement.fromJson(x))),
     );
   }

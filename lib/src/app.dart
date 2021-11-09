@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
           title: Text(
             'Pokedex',
             style: TextStyle(
-              color: Colors.black
+              color: Colors.black,
+              fontSize: 18.0
             ),
           ),
           elevation: 0,

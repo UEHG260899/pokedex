@@ -93,7 +93,7 @@ class _PokeViewState extends State<PokeView> {
                                   text: 'Altura: ',
                                   style: Theme.of(context).textTheme.headline6),
                               TextSpan(
-                                  text: '${snapshot.data!.height} unidades',
+                                  text: '${snapshot.data!.height} m',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16.0)),
                             ]),
@@ -152,7 +152,7 @@ class _PokeViewState extends State<PokeView> {
                           height: 50.0,
                         ),
                         Spacer(),
-                        Text("Mostrar Pokemón")
+                        Text("Mostrar Pokemón", style: TextStyle(fontSize: 16.0),)
                       ],
                     ),
                   ),
