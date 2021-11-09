@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,16 +13,24 @@ class PokeView extends StatefulWidget {
 
 class _PokeViewState extends State<PokeView> {
   late Future<PokemonInfo> pokemon;
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
+    //Se ejecuta una primera vez fuera del periodic para que no se tengan que esperar 30 segundos por el primer pokemon
     pokemon = traerPokemon();
+    timer = Timer.periodic(Duration(seconds: 30), (timer) {
+      setState(() {
+        pokemon = traerPokemon();
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //FutureBuilder permite construir interfaces a partir del estado de una petición o un evento asincrono
     return FutureBuilder<PokemonInfo>(
         future: pokemon,
         builder: (context, snapshot) {
@@ -50,14 +59,13 @@ class _PokeViewState extends State<PokeView> {
                               decoration: BoxDecoration(
                                   color: Colors.white, shape: BoxShape.circle),
                             ),
-                            FadeInImage(
-                              placeholder: AssetImage("assets/pokeball.jpg"),
+                            Image(
                               image: NetworkImage(
                                   "${PokemonInfo.imgUrl}/${snapshot.data!.id}.png"),
-                              height: size.width * 0.6,
                               width: size.width * 0.6,
-                              fit: BoxFit.contain,
-                            ),
+                              height: size.width * 0.6,
+                              fit: BoxFit.fill,
+                            )
                           ],
                         ),
                       ),
@@ -88,7 +96,7 @@ class _PokeViewState extends State<PokeView> {
                                   text: 'Altura: ',
                                   style: Theme.of(context).textTheme.headline6),
                               TextSpan(
-                                  text: '${snapshot.data!.height} unidades',
+                                  text: '${snapshot.data!.height} m',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16.0)),
                             ]),
@@ -147,12 +155,17 @@ class _PokeViewState extends State<PokeView> {
                           height: 50.0,
                         ),
                         Spacer(),
-                        Text("Mostrar Pokemón")
+                        Text(
+                          "Mostrar Pokemón",
+                          style: TextStyle(fontSize: 16.0),
+                        )
                       ],
                     ),
                   ),
-                  onTap: (){
-                    
+                  onTap: () {
+                    setState(() {
+                      pokemon = traerPokemon();
+                    });
                   },
                 )
               ],
