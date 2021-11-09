@@ -18,6 +18,7 @@ class _PokeViewState extends State<PokeView> {
   @override
   void initState() {
     super.initState();
+    //Se ejecuta una primera vez fuera del periodic para que no se tengan que esperar 30 segundos por el primer pokemon
     pokemon = traerPokemon();
     timer = Timer.periodic(Duration(seconds: 30), (timer) {
       setState(() {
@@ -29,6 +30,7 @@ class _PokeViewState extends State<PokeView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //FutureBuilder permite construir interfaces a partir del estado de una petición o un evento asincrono
     return FutureBuilder<PokemonInfo>(
         future: pokemon,
         builder: (context, snapshot) {
@@ -58,7 +60,8 @@ class _PokeViewState extends State<PokeView> {
                                   color: Colors.white, shape: BoxShape.circle),
                             ),
                             Image(
-                              image: NetworkImage("${PokemonInfo.imgUrl}/${snapshot.data!.id}.png"),
+                              image: NetworkImage(
+                                  "${PokemonInfo.imgUrl}/${snapshot.data!.id}.png"),
                               width: size.width * 0.6,
                               height: size.width * 0.6,
                               fit: BoxFit.fill,
@@ -152,11 +155,14 @@ class _PokeViewState extends State<PokeView> {
                           height: 50.0,
                         ),
                         Spacer(),
-                        Text("Mostrar Pokemón", style: TextStyle(fontSize: 16.0),)
+                        Text(
+                          "Mostrar Pokemón",
+                          style: TextStyle(fontSize: 16.0),
+                        )
                       ],
                     ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       pokemon = traerPokemon();
                     });

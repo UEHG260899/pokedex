@@ -9,6 +9,7 @@ class PokemonInfo {
   double weight;
   double height;
   List<TypeElement> types;
+  //URL del repositorio de imagenes
   static final String imgUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
   PokemonInfo({
@@ -29,6 +30,13 @@ class PokemonInfo {
     );
   }
 }
+
+/*
+ * 
+ * Tipados
+ * Se generaron usando quicktype.io a partir de la respuesta de la API 
+ * 
+ */
 
 class TypeElement {
     TypeElement({
@@ -66,6 +74,9 @@ class TypeType {
     };
 }
 
+/*Fin tipados*/
+
+//Petición de la API
 Future<PokemonInfo> traerPokemon() async {
   var rng = new Random();
   int numero = rng.nextInt(200);
