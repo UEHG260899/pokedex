@@ -88,7 +88,13 @@ class _MyAppState extends State<MyApp> {
                                   )
                                 ],
                               ))),
-                      TextButton(onPressed: () {}, child: Text('Obtener otro'))
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            pokemon = traerPokemon();
+                          });
+                        }, 
+                        child: Text('Obtener otro'))
                     ],
                   ),
                 );
