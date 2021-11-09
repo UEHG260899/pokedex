@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,11 +13,17 @@ class PokeView extends StatefulWidget {
 
 class _PokeViewState extends State<PokeView> {
   late Future<PokemonInfo> pokemon;
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     pokemon = traerPokemon();
+    timer = Timer.periodic(Duration(seconds: 30), (timer) {
+      setState(() {
+        pokemon = traerPokemon();
+      });
+    });
   }
 
   @override
@@ -50,14 +57,12 @@ class _PokeViewState extends State<PokeView> {
                               decoration: BoxDecoration(
                                   color: Colors.white, shape: BoxShape.circle),
                             ),
-                            FadeInImage(
-                              placeholder: AssetImage("assets/pokeball.jpg"),
-                              image: NetworkImage(
-                                  "${PokemonInfo.imgUrl}/${snapshot.data!.id}.png"),
-                              height: size.width * 0.6,
+                            Image(
+                              image: NetworkImage("${PokemonInfo.imgUrl}/${snapshot.data!.id}.png"),
                               width: size.width * 0.6,
-                              fit: BoxFit.contain,
-                            ),
+                              height: size.width * 0.6,
+                              fit: BoxFit.fill,
+                            )
                           ],
                         ),
                       ),
@@ -152,7 +157,9 @@ class _PokeViewState extends State<PokeView> {
                     ),
                   ),
                   onTap: (){
-                    
+                    setState(() {
+                      pokemon = traerPokemon();
+                    });
                   },
                 )
               ],
